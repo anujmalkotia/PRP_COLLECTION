@@ -1,0 +1,218 @@
+1.
+
+1. Develop a java class with an instance variable mapObj  of type HashMap. Create a method 
+String saveCountryCapital(String countryName, String capital) : The method should add the passed country and capital as key/value in the mapObj and return the appropriate value, try adding duplicate country name and capital.
+Key- Country                          Value - Capital
+India                                                      Delhi
+Japan                                                    Tokyo
+
+
+2. Develop a method String getCapital(String countryName) which returns the capital for the country passed. If country is not available, then return "No Country Found"
+
+
+3. Develop a method String getCountry(String capitalName) which returns the country for the capital name. If capital is not available, then return "No Capital Found"
+
+
+4. Develop a method which iterates through the mapObj and creates another HashMap mapObj2 with Capital as the key and value as Country and returns the mapObj2 object.
+Key – Capital                    Value – Country
+Delhi                                                  India
+Tokyo                                                Japan
+
+
+5. Develop a method which returns ArrayList object, the ArrayList object should contain all country names present in mapObj.
+
+
+6. Develop a method which returns ArrayList object, the ArrayList object should contain all capital names present in mapObj.
+NOTE: You can test the methods using a main method.
+
+
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
+
+public class CountryMap {
+	private HashMap<String, String> M1;
+	
+	public CountryMap() {
+		M1 = new HashMap<String, String>();
+	}
+	
+	public HashMap<String, String> saveCountryCapital(String CountryName, String capital) {
+		M1.put(CountryName, capital);
+		return M1;
+	}
+	
+	public String getCapital(String CountryName) {
+		return M1.get(CountryName);
+	}
+	
+	public String getCountry(String capitalName) {
+		Set<Entry<String, String>> set = M1.entrySet();
+		Iterator<Entry<String, String>> it = set.iterator();
+		
+		while (it.hasNext()) {
+			Map.Entry<String, String> me = it.next();
+			
+			if (me.getValue().equals(capitalName))
+				return me.getKey();
+		}
+		
+		return null;
+	}
+	
+	public HashMap<String, String> swapKyeValue() {
+		HashMap<String, String> M2 = new HashMap<String, String>();
+		
+		Set<Entry<String, String>> set = M1.entrySet();
+		Iterator<Entry<String, String>> it = set.iterator();
+		
+		while (it.hasNext()) {
+			Map.Entry<String, String> me = it.next();
+			M2.put(me.getValue(), me.getKey());
+		}
+		
+		return M2;
+	}
+	
+	public ArrayList<String> toArrayList() {
+		ArrayList<String> list = new ArrayList<>();
+		
+		Set<Entry<String, String>> set = M1.entrySet();
+		Iterator<Entry<String, String>> it = set.iterator();
+		
+		while (it.hasNext()) {
+			Map.Entry<String, String> me = it.next();
+			list.add(me.getKey());
+		}
+		
+		return list;
+	}
+}
+
+
+
+
+
+
+import java.util.HashMap;
+
+public class Q1 {
+
+	public static void main(String[] args) {
+		CountryMap countryMap = new CountryMap();
+
+		countryMap.saveCountryCapital("India", "Delhi");
+		countryMap.saveCountryCapital("Japan", "Tokyo");
+		countryMap.saveCountryCapital("USA", "Washington, D.C.");
+		
+		System.out.println(countryMap.getCapital("India"));
+		System.out.println(countryMap.getCountry("Tokyo"));
+		System.out.println(countryMap.toArrayList());
+		
+		HashMap<String, String> M2 = countryMap.swapKyeValue();
+		System.out.println(M2);
+	}
+
+}
+
+
+
+2.
+ Create a contactList object of type TreeMap to store name (as Key) and phone number (as Value). The program should have the following abilities:
+a) Provide contact name and get the phone number.
+b) Provide phone number and get the contact name.
+c) Print all the contact names and their respective phone numbers and observe the output.
+
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Set;
+import java.util.Map.Entry;
+
+public class ContactList {
+	HashMap<String, Integer> contacts = new HashMap<>();
+	
+	public void addContact(String name, Integer number) {
+		contacts.put(name, number);
+	}
+	
+	public void removeContact(String name) {
+		contacts.remove(name);
+	}
+
+	@Override
+	public String toString() {
+		return "ContactList [contacts=" + contacts + "]";
+	}
+	
+	public boolean doesContactNameExist(String name) {
+		Set<Entry<String, Integer>> set = contacts.entrySet();
+		Iterator<Entry<String, Integer>> it = set.iterator();
+		
+		while (it.hasNext()) {
+			Map.Entry<String, Integer> me = it.next();
+			
+			if (me.getKey().equals(name)) {
+				return true;
+			}
+		}
+		
+		return false;
+	}
+	
+	public boolean doesContactNumberExist(Integer number) {
+		Set<Entry<String, Integer>> set = contacts.entrySet();
+		Iterator<Entry<String, Integer>> it = set.iterator();
+		
+		while (it.hasNext()) {
+			Map.Entry<String, Integer> me = it.next();
+
+			//System.out.println(me.getValue() + " == " + number + " :: " + (me.getValue() == number));
+			if (me.getValue().intValue() == number) {
+				
+				return true;
+			}
+		}
+		
+		return false;
+	}
+	
+	public void listAllContacts() {
+		Set<Entry<String, Integer>> set = contacts.entrySet();
+		Iterator<Entry<String, Integer>> it = set.iterator();
+		
+		while (it.hasNext()) {
+			Map.Entry<String, Integer> me = it.next();
+			System.out.println(me);
+		}
+
+	}
+}
+
+
+
+
+
+
+public class Q2 {
+
+	public static void main(String[] args) {
+		ContactList contactsList = new ContactList();
+		
+		contactsList.addContact("Bob Biswas", 98310983);
+		contactsList.addContact("Police", 100);
+		contactsList.addContact("Alice", 98765432);
+				
+		System.out.println("Police: " + contactsList.doesContactNameExist("Police"));
+		System.out.println("98765432: " + contactsList.doesContactNumberExist(98765432));
+		
+		System.out.println();
+		contactsList.listAllContacts();
+	}
+
+}
+
